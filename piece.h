@@ -1,38 +1,51 @@
-#include <case.h>
+#pragma once
+#include "case.h"
+
+class Plateau; //le .h a juste besoin de savoir que le plateau existe mais pas besoin des méthodes
 
 class Piece {
-    Piece* p;
 public:
     int couleur; // 0 = noir, 1 = blanc
     Case c;
-    virtual const bool permission_bouge(Case c);
-    void bouge(Case c);
-    Piece();
+    virtual bool permission_bouge(Plateau &p,Case c) const;
+    void bouge(Plateau &p,Case c);
     Piece(Case c, int couleur);
-    ~Piece();
+    virtual ~Piece(){}
 };
 
 class Roi : public Piece {
-    virtual const bool permission_bouge(Case c);
+public:
+    Roi(Case c, int couleur);
+    virtual bool permission_bouge(const Plateau &p,Case c) const;
     bool rock(Case c);
 };
 
 class Dame : public Piece {
-    virtual const bool permission_bouge(Case c);
+public:
+    Dame(Case c, int couleur);
+    virtual bool permission_bouge(const Plateau &p,Case c) const;
 };
 
 class Fou : public Piece {
-    virtual const bool permission_bouge(Case c);
+public:
+    Fou(Case c, int couleur);
+    virtual bool permission_bouge(const Plateau &p,Case c) const;
 };
 
 class Cavalier : public Piece {
-    virtual const bool permission_bouge(Case c);
+public:
+    Cavalier(Case c, int couleur);
+    virtual bool permission_bouge(const Plateau &p,Case c) const;
 };
 
 class Tour : public Piece {
-    virtual const bool permission_bouge(Case c);
+public:
+    Tour(Case c, int couleur);
+    virtual bool permission_bouge(const Plateau &p,Case c) const;
 };
 
 class Pion : public Piece {
-    virtual const bool permission_bouge(Case c);
+public:
+    Pion(Case c, int couleur);
+    virtual bool permission_bouge(const Plateau &p,Case c) const;
 };

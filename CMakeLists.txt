@@ -5,6 +5,6 @@ list(APPEND CMAKE_SYSTEM_FRAMEWORK_PATH /Library/Frameworks) #Mac, why not auto?
 find_package(Imagine REQUIRED)
 
 project(CHESS)
-add_executable(CHESS main.cpp piece.cpp case.cpp graphics.cpp)
+add_executable(CHESS main.cpp piece.cpp case.cpp graphics.cpp plateau.cpp joueur.cpp)
 ImagineUseModules(CHESS Graphics)
 
