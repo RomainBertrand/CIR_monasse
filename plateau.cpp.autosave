@@ -34,7 +34,47 @@ bool Plateau::bouge(Piece* p, Case c){ // on teste les permissions de bouger en 
         return true;
     }
     else if (p->get_name().compare(std::string("fou"))){
-        return true;
+        if (p->permission_bouge(c)){ // on check le board
+            int dx = c.x - p->c.x;
+            int dy = c.y - p->c.y; // on calcule la différence des cases et on fait tous les cas possibles
+            if (dx>0 && dy>0){
+                for(int i=1;i<=dx;i++){
+                    if (get(p->c + Case(i,i))!=0) return false;
+                }
+                p->bouge(c);
+                set(p,c);
+                set(0,p->c);
+                return true;
+            }
+            if (dx>0 && dy<0){
+                for(int i=1;i<=dx;i++){
+                    if (get(p->c + Case(i,-i))!=0) return false;
+                }
+                p->bouge(c);
+                set(p,c);
+                set(0,p->c);
+                return true;
+            }
+            if (dx<0 && dy>0){
+                for(int i=-1;i>=dx;i--){
+                    if (get(p->c + Case(i,-i))!=0) return false;
+                }
+                p->bouge(c);
+                set(p,c);
+                set(0,p->c);
+                return true;
+            }
+            if (dx<0 && dy<0){
+                for(int i=-1;i<=dx;i--){
+                    if (get(p->c + Case(i,i))!=0) return false;
+                }
+                p->bouge(c);
+                set(p,c);
+                set(0,p->c);
+                return true;
+            }
+        }
+        else return false;
     }
     else if (p->get_name().compare(std::string("cavalier"))){
         if (p->permission_bouge(c) && get(c)==0){

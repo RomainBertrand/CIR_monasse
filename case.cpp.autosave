@@ -12,3 +12,13 @@ Case::Case(int i, int j){
 int Case::distance(Case c_prime){
     return std::max(abs(c_prime.x - x), abs(c_prime.y -y));
 }
+
+Case Case::operator+(Case c1){
+    x+=c1.x;
+    y+=c1.y
+}
+
+bool Case::operator==(Case c1){
+    if (x==c1.x && y==c1.y) return true;
+    else return false;
+}
