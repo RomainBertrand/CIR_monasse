@@ -25,8 +25,7 @@ int Case::get(int a) const{
 }
 
 Case Case::operator+(Case c1){
-    x+=c1.x;
-    y+=c1.y;
+    return Case(y+c1.y, x+c1.x);
 }
 
 bool Case::operator==(Case c1){
