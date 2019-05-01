@@ -1,7 +1,12 @@
 #pragma once
-#include "plateau.h"
+
+class Piece;
+class Plateau;
 
 class Joueur {
+    int color;
+    Piece** boite;
 public:
-    Joueur (Plateau p_initial) {}
+    Joueur (Plateau& p, int col);
+    ~Joueur();
 };

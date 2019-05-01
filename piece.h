@@ -1,28 +1,32 @@
 #pragma once
 #include "case.h"
 #include <string>
-// name
 
 class Plateau; //le .h a juste besoin de savoir que le plateau existe mais pas besoin des méthodes
 
 class Piece {
+protected:
     std::string name = "piece";
-public:
     int couleur; // 0 = noir, 1 = blanc
     Case c;
-    virtual bool permission_bouge(Case c) const;
+public:
+    virtual bool permission_bouge(Case c) const {return false;} // il faut la définir
     std::string get_name();
-    void bouge(Case c);
+    virtual void bouge(Case c);
+    Case get(){return c;}
     Piece(Case c, int couleur);
+    Piece();
     virtual ~Piece(){}
 };
 
 class Roi : public Piece {
+    bool rock = true;
     std::string name = "roi" ;
 public:
     Roi(Case c, int couleur);
+    virtual void bouge(Case c);
     virtual bool permission_bouge(Case c) const;
-    bool rock(Case c);
+    bool rocker(Case c){}
 };
 
 class Dame : public Piece {
@@ -47,9 +51,11 @@ public:
 };
 
 class Tour : public Piece {
+    bool rock = true;
     std::string name = "tour" ;
 public:
     Tour(Case c, int couleur);
+    virtual void bouge(Case c);
     virtual bool permission_bouge(Case c) const;
 };
 

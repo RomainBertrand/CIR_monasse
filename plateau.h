@@ -6,10 +6,9 @@
 class Plateau {
     Piece** plateau; // On met le plateau en privée, si une pièce veut checker qu'elle peut bouger on demande le reseignement au tableau avec une méthode
 public:
-    Plateau ();
+    Plateau();
     ~Plateau();
     bool bouge(Piece* p, Case c); // bouge une piece
-    Piece* get(int i, int j); // accesseur du plateau
-    void set(Piece* p, int i, int j);
-
+    Piece* get(Case c); // accesseur du plateau
+    void set(Piece* p, Case c);
 };

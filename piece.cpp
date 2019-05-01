@@ -2,6 +2,8 @@
 #include "plateau.h"
 #include "cmath"
 
+Piece::Piece(){}
+
 Piece::Piece(Case case_depart, int col){
     couleur = col;
     c = case_depart;
@@ -9,6 +11,16 @@ Piece::Piece(Case case_depart, int col){
 
 void Piece::bouge(Case case_arrivee){
     c=case_arrivee;
+}
+
+void Roi::bouge(Case case_arrivee){
+    c=case_arrivee;
+    rock=false;
+}
+
+void Tour::bouge(Case case_arrivee){
+    c=case_arrivee;
+    rock=false;
 }
 
 std::string Piece::get_name(){
@@ -26,28 +38,28 @@ bool Roi::permission_bouge(Case case_arrive) const {
 }
 
 bool Dame::permission_bouge(Case case_arrive) const { // déplacement du fou OU de la tour
-    if ((case_arrive.x == c.x || case_arrive.y == c.y) || (abs(case_arrive.x-c.x)==0 && abs(case_arrive.y-c.y)==0)) return true;
+    if ((case_arrive.get(0) == c.get(0) || case_arrive.get(1) == c.get(1)) || (abs(case_arrive.get(0)-c.get(0))==0 && abs(case_arrive.get(1)-c.get(1))==0)) return true;
     else return false;
 }
 
 bool Cavalier::permission_bouge(Case case_arrive) const {
-    if (abs(case_arrive.x-c.x)*abs(case_arrive.y-c.y)==2) return true;
+    if (abs(case_arrive.get(0)-c.get(0))*abs(case_arrive.get(1)-c.get(1))==2) return true;
     else return false;
 }
 
 bool Fou::permission_bouge(Case case_arrive) const {
-    if (abs(case_arrive.x-c.x)==0 && abs(case_arrive.y-c.y)==0) return true;
+    if (abs(case_arrive.get(0)-c.get(0))==0 && abs(case_arrive.get(1)-c.get(1))==0) return true;
     else return false;
 }
 
 bool Tour::permission_bouge(Case case_arrive) const {
-    if (case_arrive.x == c.x || case_arrive.y == c.y) return true;
+    if (case_arrive.get(0) == c.get(0) || case_arrive.get(1) == c.get(1)) return true;
     else return false;
 }
 
 bool Pion::permission_bouge(Case case_arrive) const { // les noirs en haut les blanc en bas
-    if (couleur==0 && case_arrive.y-c.y==1) return true;
-    else if (couleur==1 && c.y-case_arrive.y==1) return true;
+    if (couleur==0 && case_arrive.get(1)-c.get(1)==1) return true;
+    else if (couleur==1 && c.get(1)-case_arrive.get(1)==1) return true;
     else return false;
 }
 

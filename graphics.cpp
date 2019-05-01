@@ -1,16 +1,10 @@
 #include "graphics.h"
+#include "case.h"
 using namespace std;
 
-Case::Case(){};
-
-Case::Case(int a,int b){
-    i = a;
-    j = b;
-}
-
 void Coord(Case c, int&x, int&y){
-    x = (c.i)*space+space/2;
-    y = (c.j)*space+space/2;
+    x = (c.get(0))*space+space/2;
+    y = (c.get(1))*space+space/2;
 }
 
 void DisplayGrid(){

@@ -1,12 +1,8 @@
 #pragma once
 #include <Imagine/Graphics.h>
 using namespace Imagine;
-class Case{
-public:
-    int i,j;
-    Case(int i,int j);
-    Case();
-};
+
+class Case;
 
 const int space=50;
 const int RAYON=fmax(space/4, 1);
