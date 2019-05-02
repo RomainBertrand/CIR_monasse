@@ -57,7 +57,7 @@ bool Cavalier::permission_bouge(Case case_arrive) const {
 }
 
 bool Fou::permission_bouge(Case case_arrive) const {
-    if (abs(case_arrive.get(0)-c.get(0))==0 && abs(case_arrive.get(1)-c.get(1))==0) return true;
+    if (abs(case_arrive.get(0)-c.get(0)) == abs(case_arrive.get(1)-c.get(1))) return true;
     else return false;
 }
 
