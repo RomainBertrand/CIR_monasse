@@ -24,9 +24,9 @@ Plateau::Plateau(){
     set(new Cavalier(Case(6,7),0),Case(6,7));
     set(new Tour(Case(7,7),0),Case(7,7));
 
-    for(int i=2;i<6;i++){
-        for (int j=0;j<8;j++) {
-            set(nullptr,Case(j,i));
+    for(int j=2;j<6;j++){
+        for (int i=0;i<8;i++) {
+            set(nullptr,Case(i,j));
         }
     }
     for (int j=0;j<8;j++){
@@ -46,7 +46,13 @@ Plateau::~Plateau(){
 
 void Plateau::affiche(){
     std::cout << "DEBUT AFFICHE PLATEAU" << std::endl;
-    for(int i=0;i<8*8;i++) std::cout << plateau[i] << std::endl;
+    for(int j=7;j>=0;j--){
+        for(int i=0;i<8;i++){
+        if(get(Case(i,j))!=nullptr) std::cout << get(Case(i,j))->get_name() << " ";
+        else std::cout << "vide ";
+        }
+        std::cout<<std::endl;
+    }
     std::cout <<"FIN AFFICHE PLATEAU" << std::endl;
 }
 
@@ -59,17 +65,18 @@ void Plateau::set(Piece* p, Case c){
 }
 
 bool Plateau::bouge(Piece* p, Case c){ // on teste les permissions de bouger en connaissant le plateau, string pour indiquer quel piece bouge
+    if (p == nullptr) return false; //on ne peut pas bouger du vide
     if (c == p->get()) return false; // on ne peut pas bouger sur la même case
-    if (p->get_name().compare(std::string("roi"))){
+    if (p->get_name().compare(std::string("roi"))==0){
         if (p->permission_bouge(c) && get(c)==nullptr){
-            p->bouge(c);
             set(p,c);
             set(nullptr,p->get());
+            p->bouge(c);
             return true;
         }
         else return false;
     }
-    else if (p->get_name().compare(std::string("dame"))){
+    else if (p->get_name().compare(std::string("dame"))==0){
         if (p->permission_bouge(c)){ // on check le board
             int dx = c.get(0) - p->get().get(0);
             int dy = c.get(1) - p->get().get(1); // on calcule la différence des cases et on fait tous les cas possibles
@@ -77,79 +84,79 @@ bool Plateau::bouge(Piece* p, Case c){ // on teste les permissions de bouger en 
                 for(int i=1;i<=dx;i++){
                     if (get(p->get() + Case(i,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx>0 && dy<0){
                 for(int i=1;i<=dx;i++){
                     if (get(p->get() + Case(i,-i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx<0 && dy>0){
                 for(int i=-1;i>=dx;i--){
                     if (get(p->get() + Case(i,-i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx<0 && dy<0){
                 for(int i=-1;i<=dx;i--){
                     if (get(p->get() + Case(i,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx>0 && dy==0){
                 for(int i=1;i<=dx;i++){
                     if (get(p->get() + Case(i,0))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx<0 && dy==0){
                 for(int i=-1;i>=dx;i--){
                     if (get(p->get() + Case(i,0))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx==0 && dy>0){
                 for(int i=1;i<=dy;i++){
                     if (get(p->get() + Case(0,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx==0 && dy<0){
                 for(int i=-1;i<=dy;i--){
                     if (get(p->get() + Case(0,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
         }
         else return false;
 
     }
-    else if (p->get_name().compare(std::string("fou"))){
+    else if (p->get_name().compare(std::string("fou"))==0){
         if (p->permission_bouge(c)){ // on check le board
             int dx = c.get(0) - p->get().get(0);
             int dy = c.get(1) - p->get().get(1); // on calcule la différence des cases et on fait tous les cas possibles
@@ -157,51 +164,51 @@ bool Plateau::bouge(Piece* p, Case c){ // on teste les permissions de bouger en 
                 for(int i=1;i<=dx;i++){
                     if (get(p->get() + Case(i,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx>0 && dy<0){
                 for(int i=1;i<=dx;i++){
                     if (get(p->get() + Case(i,-i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx<0 && dy>0){
                 for(int i=-1;i>=dx;i--){
                     if (get(p->get() + Case(i,-i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx<0 && dy<0){
                 for(int i=-1;i<=dx;i--){
                     if (get(p->get() + Case(i,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
         }
         else return false;
     }
-    else if (p->get_name().compare(std::string("cavalier"))){
+    else if (p->get_name().compare(std::string("cavalier"))==0){
         if (p->permission_bouge(c) && get(c)==nullptr){
-            p->bouge(c);
             set(p,c);
             set(nullptr,p->get());
+            p->bouge(c);
             return true;
         }
         else return false;
     }
-    else if (p->get_name().compare(std::string("tour"))){
+    else if (p->get_name().compare(std::string("tour"))==0){
         if (p->permission_bouge(c)){ // on check le board
             int dx = c.get(0) - p->get().get(0);
             int dy = c.get(1) - p->get().get(1); // on calcule la différence des cases et on fait tous les cas possibles
@@ -209,47 +216,47 @@ bool Plateau::bouge(Piece* p, Case c){ // on teste les permissions de bouger en 
                 for(int i=1;i<=dx;i++){
                     if (get(p->get() + Case(i,0))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx<0 && dy==0){
                 for(int i=-1;i>=dx;i--){
                     if (get(p->get() + Case(i,0))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx==0 && dy>0){
                 for(int i=1;i<=dy;i++){
                     if (get(p->get() + Case(0,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
             if (dx==0 && dy<0){
                 for(int i=-1;i<=dy;i--){
                     if (get(p->get() + Case(0,i))!=nullptr) return false;
                 }
-                p->bouge(c);
                 set(p,c);
                 set(nullptr,p->get());
+                p->bouge(c);
                 return true;
             }
         }
         else return false;
 
     }
-    else if (p->get_name().compare(std::string("pion"))){
+    else if (p->get_name().compare(std::string("pion"))==0){
         if (p->permission_bouge(c) && get(c)==nullptr){
-            p->bouge(c);
             set(p,c);
             set(nullptr,p->get());
+            p->bouge(c);
             return true;
         }
         else return false;

@@ -8,7 +8,10 @@ using namespace std;
 int main()
 {
     Plateau p;
-    Joueur j1(p,0);
-    Joueur j2(p,1);
+    p.affiche();
+    cout <<p.bouge(p.get(Case(0,1)),Case(0,2)) << endl;
+    p.affiche();
+    cout <<p.bouge(p.get(Case(0,6)),Case(0,5)) << endl;
+    p.affiche();
     return 0;
 }

@@ -13,6 +13,10 @@ void Piece::bouge(Case case_arrivee){
     c=case_arrivee;
 }
 
+void Pion::bouge(Case case_arrivee){
+    c=case_arrivee;
+}
+
 void Roi::bouge(Case case_arrivee){
     c=case_arrivee;
     rock=false;
@@ -23,9 +27,14 @@ void Tour::bouge(Case case_arrivee){
     rock=false;
 }
 
-std::string Piece::get_name(){
-    return name;
-}
+std::string Piece::get_name(){return name;}
+std::string Roi::get_name(){return name;}
+std::string Dame::get_name(){return name;}
+std::string Fou::get_name(){return name;}
+std::string Cavalier::get_name(){return name;}
+std::string Tour::get_name(){return name;}
+std::string Pion::get_name(){return name;}
+
 
 // il faut appeler un accesseur sur le plateau qui répond si la case est vide sur le chemain dans permission_bouge.
 // pas de plateau publique !!!!
@@ -58,8 +67,8 @@ bool Tour::permission_bouge(Case case_arrive) const {
 }
 
 bool Pion::permission_bouge(Case case_arrive) const { // les noirs en haut les blanc en bas
-    if (couleur==0 && case_arrive.get(1)-c.get(1)==1) return true;
-    else if (couleur==1 && c.get(1)-case_arrive.get(1)==1) return true;
+    if (couleur==1 && case_arrive.get(1)-c.get(1)==1) return true;
+    else if (couleur==0 && c.get(1)-case_arrive.get(1)==1) return true;
     else return false;
 }
 
