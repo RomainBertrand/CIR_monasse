@@ -47,7 +47,7 @@ bool Roi::permission_bouge(Case case_arrive) const {
 }
 
 bool Dame::permission_bouge(Case case_arrive) const { // déplacement du fou OU de la tour
-    if ((case_arrive.get(0) == c.get(0) || case_arrive.get(1) == c.get(1)) || (abs(case_arrive.get(0)-c.get(0))==0 && abs(case_arrive.get(1)-c.get(1))==0)) return true;
+    if ((case_arrive.get(0) == c.get(0) || case_arrive.get(1) == c.get(1)) || (abs(case_arrive.get(0)-c.get(0))== abs(case_arrive.get(1)-c.get(1)))) return true;
     else return false;
 }
 
