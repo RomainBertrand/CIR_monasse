@@ -5,8 +5,8 @@
 Case::Case(){};
 
 Case::Case(int i, int j){
-    x=j;
-    y=i;
+    x=i;
+    y=j;
 };
 
 int Case::distance(Case c_prime){
@@ -25,7 +25,7 @@ int Case::get(int a) const{
 }
 
 Case Case::operator+(Case c1){
-    return Case(y+c1.y, x+c1.x);
+    return Case(x+c1.x,y+c1.y);
 }
 
 bool Case::operator==(Case c1){

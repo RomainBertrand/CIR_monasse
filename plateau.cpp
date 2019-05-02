@@ -1,5 +1,6 @@
 #include "plateau.h"
 #include "piece.h"
+#include <iostream>
 
 Plateau::Plateau(){
     plateau = new Piece*[8*8];
@@ -43,7 +44,13 @@ Plateau::~Plateau(){
     delete [] plateau;
 }
 
-Piece* Plateau::get(Case c){
+void Plateau::affiche(){
+    std::cout << "DEBUT AFFICHE PLATEAU" << std::endl;
+    for(int i=0;i<8*8;i++) std::cout << plateau[i] << std::endl;
+    std::cout <<"FIN AFFICHE PLATEAU" << std::endl;
+}
+
+Piece* Plateau::get(Case c) const{
     return plateau[c.get(0)*8+c.get(1)];
 }
 

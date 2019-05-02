@@ -7,6 +7,7 @@ class Joueur {
     int color;
     Piece** boite;
 public:
-    Joueur (Plateau& p, int col);
+    Joueur (const Plateau& p, int col);
+    void affiche();
     ~Joueur();
 };

@@ -8,7 +8,8 @@ class Plateau {
 public:
     Plateau();
     ~Plateau();
+    void affiche();
     bool bouge(Piece* p, Case c); // bouge une piece
-    Piece* get(Case c); // accesseur du plateau
+    Piece* get(Case c) const; // accesseur du plateau
     void set(Piece* p, Case c);
 };

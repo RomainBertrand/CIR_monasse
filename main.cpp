@@ -10,5 +10,5 @@ int main()
     Plateau p;
     Joueur j1(p,0);
     Joueur j2(p,1);
-	return 0;
+    return 0;
 }
