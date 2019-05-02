@@ -8,6 +8,8 @@ using namespace std;
 int main()
 {
     Plateau p;
+    display_grid_empty();
+    display_board(&p);
     p.affiche();
     click();
     cout <<p.bouge(p.get(Case(0,1)),Case(0,2)) << endl;

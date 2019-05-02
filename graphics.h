@@ -2,6 +2,7 @@
 #include <Imagine/Graphics.h>
 #include <Imagine/Images.h>
 #include "piece.h"
+#include "plateau.h"
 using namespace Imagine;
 
 class Case;
@@ -20,3 +21,4 @@ void display_grid_empty();
 void display_piece(Case c, Piece* p);
 void clr_case(Case c);
 void go_to(Case c1, Case c2, Piece* p);
+void display_board(Plateau* board);

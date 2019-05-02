@@ -5,7 +5,8 @@
 
 
 class Plateau {
-    Piece** plateau; // On met le plateau en privée, si une pièce veut checker qu'elle peut bouger on demande le reseignement au tableau avec une méthode
+    Piece** plateau; // On met le plateau en privé, si une pièce veut checker
+    // qu'elle peut bouger on demande le renseignement au tableau avec une méthode
 public:
     Plateau();
     ~Plateau();

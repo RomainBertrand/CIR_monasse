@@ -70,3 +70,16 @@ void go_to(Case c1, Case c2, Piece* p){
     clr_case(c1);
     display_piece(c2, p);
 }
+
+void display_board(Plateau* board){
+    for (int j=0;j<8;j++){
+        for (int i=0;i<8;i++){
+            Case c(i, j);
+            clr_case(c);
+            Piece* p = board->get(c);
+            if (p != nullptr){
+                display_piece(c, p);
+            }
+        }
+    }
+}
