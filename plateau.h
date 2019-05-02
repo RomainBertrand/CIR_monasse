@@ -1,6 +1,7 @@
 #pragma once
 #include "piece.h"
 #include "case.h"
+#include "graphics.h"
 
 
 class Plateau {

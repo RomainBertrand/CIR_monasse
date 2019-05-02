@@ -35,6 +35,14 @@ Plateau::Plateau(){
     for (int j=0;j<8;j++){
         set(new Pion(Case(j,7),0),Case(j,6));// on créé les pions noirs
     }
+    display_grid_empty();
+    for (int j=0;j<2;j++){
+        for (int i=0;i<8;i++){
+            display_piece(Case(i, j), plateau[i*8+j]);
+            int j2 = 7-j;
+            display_piece(Case(i, j2), plateau[i*8+j2]);
+        }
+    }
 }
 
 Plateau::~Plateau(){

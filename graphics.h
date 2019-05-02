@@ -1,20 +1,22 @@
 #pragma once
 #include <Imagine/Graphics.h>
+#include <Imagine/Images.h>
+#include "piece.h"
 using namespace Imagine;
 
 class Case;
 
-const int space=50;
-const int RAYON=fmax(space/4, 1);
-const Color col_robot = GREEN;
-const Color col_case = RED;
-const Color Gray=Color(200, 200, 200);
+const int SPACE=90;
+const int FONT_SIZE = 30;
+const int MARGIN = 50;
+const Color LIGHTGREEN=Color(119, 149, 89);
+const Color IVORY=Color(238, 238, 211);
+const Color BOARD_COLORS[2] = {LIGHTGREEN, IVORY};
 
 
-void Coord(Case c, int&x, int&y);
+void coord(Case c, int&x, int&y);
 
-void DisplayGrid();
-void MakeCircle(Case c, Color col, int r = RAYON);
-void DisplayRobot(Case c);
-void ExitCase(Case c);
-void GoTo(Case c1, Case c2);
+void display_grid_empty();
+void display_piece(Case c, Piece* p);
+void clr_case(Case c);
+void go_to(Case c1, Case c2, Piece* p);
