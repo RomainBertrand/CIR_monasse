@@ -70,3 +70,21 @@ void go_to(Case c1, Case c2, Piece* p){
     clr_case(c1);
     display_piece(c2, p);
 }
+bool click_move(Case& c_start, Case& c_end){
+    int x, y;
+    int count = 0;
+    while (count < 2 && getMouse(x, y) != 3){  // right click = 3 = No more moves, I wanna stop
+        count++;
+        int i = (x-MARGIN)/SPACE;
+        int j = 7-(y-MARGIN)/SPACE;
+        if (count==1){
+            cout << "Got starting Case" << endl;
+            c_start.set(i, j);
+        }
+        else if (count==2) {
+            cout << "Got ending Case" << endl;
+            c_end.set(i, j);
+        }
+    }
+    return count == 2;
+}

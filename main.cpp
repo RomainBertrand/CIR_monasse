@@ -9,6 +9,11 @@ int main()
 {
     Plateau b;
     b.affiche();
+    Case c1, c2;
+    while(click_move(c1, c2)){
+        b.bouge(b.get(c1), c2);
+    }
+    click();
     b.bouge(b.get(Case('A',2)),Case('A',3));
     click();
     b.bouge(b.get(Case('A',3)),Case('A',4));
