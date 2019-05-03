@@ -11,7 +11,9 @@ public:
     ~Plateau();
     void affiche();
     void bouge(Piece* p, Case c); // bouge une piece
-    bool permission_bouge(Piece* p, Case c); // renvoie true si l'on peut bouger la pièce
+    int permission_bouge(Piece* p, Case c); // renvoie 1 si l'on peut bouger la pièce. Retourne 2 si pas possible car il case occupée, retourne 0 sinon
+    void mange(Piece* p, Case c);
+    bool permission_mange(Piece* p, Case c);
     Piece* get(Case c) const; // accesseur du plateau
     void set(Piece* p, Case c);
 };
