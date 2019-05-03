@@ -33,7 +33,7 @@ Plateau::Plateau(){
         set(new Pion(Case(j,1),1),Case(j,1));// on créé les pions blanc
     }
     for (int j=0;j<8;j++){
-        set(new Pion(Case(j,7),0),Case(j,6));// on créé les pions noirs
+        set(new Pion(Case(j,6),0),Case(j,6));// on créé les pions noirs
     }
 }
 
