@@ -59,7 +59,7 @@ void display_piece(Case c, Piece* p){
     }
     int x, y;
     coord(c, x, y);
-    display(im, x, y);
+    display(im, x, y, false);
 }
 void clr_case(Case c){
     int x, y;
