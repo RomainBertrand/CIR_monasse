@@ -9,6 +9,12 @@ Case::Case(int i, int j){
     y=j;
 };
 
+Case::Case(char a, int k){
+    x=int(a)-65; // le A correspond à un 0
+    y=k-1;
+
+};
+
 int Case::distance(Case c_prime){
     return std::max(abs(c_prime.x - x), abs(c_prime.y -y));
 }

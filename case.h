@@ -6,6 +6,7 @@ class Case {
 public:
     Case();
     Case(int i, int j);
+    Case(char a, int k);
     int get(int a) const;
     int distance(Case cprime);
     Case operator+(Case c1);

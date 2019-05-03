@@ -22,7 +22,7 @@ std::string get_path_image(Piece* p){
 }
 
 /*********************
- * grpahic functions *
+ * graphic functions *
  ********************/
 
 void display_grid_empty(){
