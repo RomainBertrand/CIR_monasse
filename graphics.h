@@ -3,9 +3,10 @@
 #include <Imagine/Images.h>
 #include <map>
 #include "piece.h"
-#include "plateau.h"
+
 using namespace Imagine;
 
+class Plateau;
 class Case;
 
 const int SPACE=90;

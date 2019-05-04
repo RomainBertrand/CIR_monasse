@@ -1,5 +1,6 @@
 #include "graphics.h"
 #include "case.h"
+#include "plateau.h"
 using namespace std;
 #include <string.h>
 

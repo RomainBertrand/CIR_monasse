@@ -30,10 +30,10 @@ Plateau::Plateau(){
         }
     }
     for (int j=0;j<8;j++){
-        set(new Pion(Case(j,1),1),Case(j,1));// on créé les pions blanc
+        set(new Pion(Case(j,1),1),Case(j,1)); // on crée les pions blancs
     }
     for (int j=0;j<8;j++){
-        set(new Pion(Case(j,6),0),Case(j,6));// on créé les pions noirs
+        set(new Pion(Case(j,6),0),Case(j,6)); // on crée les pions noirs
     }
 }
 
@@ -80,7 +80,7 @@ void Plateau::mange(Piece *p, Case c){
 }
 
 int Plateau::permission_bouge(Piece* p, Case c){ // on teste les permissions de bouger en connaissant le plateau, string pour indiquer quel piece bouge
-    if (p == nullptr) return 0; //on ne peut pas bouger du vide
+    if (p == nullptr) return 0; // on ne peut pas bouger du vide
     if (c == p->get()) return 0; // on ne peut pas bouger sur la même case
     if (p->get_name().compare(std::string("roi"))==0){
         if (p->permission_bouge(c)){
