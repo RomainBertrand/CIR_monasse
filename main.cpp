@@ -9,27 +9,37 @@ using namespace std;
 int main()
 {
     load_all_pieces();
-    Plateau p;
+    Plateau b;
+    b.affiche();
+    Case c1, c2;
+    while(click_move(c1, c2)){
+        b.bouge(b.get(c1), c2);
+    }
     click();
-
-    p.affiche();
+    b.bouge(b.get(Case('A',2)),Case('A',3));
+    click();
+    b.bouge(b.get(Case('A',3)),Case('A',4));
+    click();
+    b.bouge(b.get(Case('A',1)),Case('A',3));
+    click();
+    b.bouge(b.get(Case('A',3)),Case('G',3));
+    click();
+    b.bouge(b.get(Case('B',1)),Case('A',3));
+    click();
+    b.bouge(b.get(Case('C',2)),Case('C',3));
+    click();
+    b.bouge(b.get(Case('D',2)),Case('D',3));
+    click();
+    b.bouge(b.get(Case('C',1)),Case('H',6));
+    click();
+    b.mange(b.get(Case('G',3)),Case('G',7));
+    /*
     cout <<p.bouge(p.get(Case(0,1)),Case(0,2)) << endl;
-    p.affiche();
+    go_to(Case(0,1),Case(0,2), p.get(Case(0, 2)));
+    click();
     cout <<p.bouge(p.get(Case(0,6)),Case(0,5)) << endl;
-    p.affiche();
-    cout <<p.bouge(p.get(Case(0,5)),Case(0,6)) << endl;
-    p.affiche();
-    cout <<p.bouge(p.get(Case(1,0)),Case(2,2)) << endl;
-    p.affiche();
-    cout <<p.bouge(p.get(Case(1,1)),Case(1,2)) << endl;
-    p.affiche();
-    cout <<p.bouge(p.get(Case(0,2)),Case(1,3)) << endl;
-    p.affiche();
-    cout <<p.bouge(p.get(Case(0,0)),Case(0,4)) << endl;
-    p.affiche();
-    cout <<p.bouge(p.get(Case(0,4)),Case(5,4)) << endl;
-    p.affiche();
-    cout <<p.bouge(p.get(Case(0,2)),Case(1,1)) << endl;
-    p.affiche();
+    go_to(Case(0,1),Case(0,2), p.get(Case(0, 2)));
+    */
+    click();
     return 0;
 }
