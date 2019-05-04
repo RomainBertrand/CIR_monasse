@@ -8,8 +8,11 @@ using namespace std;
 
 int main()
 {
+    display_grid_empty();
     load_all_pieces();
     Plateau b;
+    display_board(b);
+    click();
     b.affiche();
     Case c1, c2;
     while(click_move(c1, c2)){

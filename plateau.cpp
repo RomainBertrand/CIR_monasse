@@ -35,14 +35,6 @@ Plateau::Plateau(){
     for (int j=0;j<8;j++){
         set(new Pion(Case(j,6),0),Case(j,6));// on créé les pions noirs
     }
-    display_grid_empty();
-    for (int j=0;j<2;j++){
-        for (int i=0;i<8;i++){
-            display_piece(Case(i, j), get(Case(i,j)));
-            int j2 = 7-j;
-            display_piece(Case(i, j2), get(Case(i,j2)));
-        }
-    }
 }
 
 Plateau::~Plateau(){
@@ -52,20 +44,15 @@ Plateau::~Plateau(){
     delete [] plateau;
 }
 
-void Plateau::affiche(){
-    std::cout << "DEBUT AFFICHE PLATEAU" << std::endl;
-    for(int j=7;j>=0;j--){
-        for(int i=0;i<8;i++){
-        if(get(Case(i,j))!=nullptr) std::cout << get(Case(i,j))->get_name() << " ";
-        else std::cout << "vide ";
-        }
-        std::cout<<std::endl;
-    }
-    std::cout <<"FIN AFFICHE PLATEAU" << std::endl;
+Piece* Plateau::operator[](Case c) const{
+    return plateau[c.get(0)*8+c.get(1)];
 }
 
 Piece* Plateau::get(Case c) const{
     return plateau[c.get(0)*8+c.get(1)];
+}
+Piece* Plateau::get(int i, int j) const{
+    return plateau[i*8+j];
 }
 
 void Plateau::set(Piece* p, Case c){
@@ -260,4 +247,19 @@ bool Plateau::permission_mange(Piece *p, Case c){
         return (permission_bouge(p,c)==2);
     }
     else return false;
+}
+
+
+void Plateau::affiche() const{
+    std::cout << "DEBUT AFFICHE PLATEAU" << std::endl;
+    for(int j=7;j>=0;j--){
+        for(int i=0;i<8;i++){
+            if(get(Case(i,j))!=nullptr)
+                std::cout << get(Case(i,j))->get_name() << " ";
+            else
+                std::cout << "vide ";
+        }
+        std::cout<<std::endl;
+    }
+    std::cout <<"FIN AFFICHE PLATEAU" << std::endl;
 }

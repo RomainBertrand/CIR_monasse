@@ -7,7 +7,7 @@ Joueur::Joueur(const Plateau& p, int col){
     boite = new Piece*[8*2];
     for(int j=0;j<2;j++){ // tiens compte de la couleur pour remplir la boite avec les bonnes pièces
         for(int i=0;i<8;i++){
-            boite[i+j*8]=p.get(Case(i,j+6*((col+1)%2)));
+            boite[i+j*8]=p[Case(i,j+6*((col+1)%2))];
         }
     }
 }
@@ -15,7 +15,7 @@ Joueur::~Joueur(){
     delete [] boite;
 }
 
-void Joueur::affiche(){
+void Joueur::affiche() const{
     std::cout << "DEBUT AFFICHE JOUEUR" << std::endl;
     for(int i=0;i<8*2;i++) std::cout << boite[i] << std::endl;
     std::cout <<"FIN AFFICHE JOUEUR" << std::endl;

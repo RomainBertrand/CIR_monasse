@@ -9,12 +9,12 @@ using namespace std;
 // to load pieces' images
 std::map<std::string, AlphaColor*> byte_pieces;
 
-std::string get_path_name(string name, string col){
+std::string get_path_name(const string name, const string col){
     string s = col+name;
     return stringSrcPath("img/"+to_string(SPACE)+"/"+s+".png");
 }
 
-AlphaColor* load_bitmap(string name, string col){
+AlphaColor* load_bitmap(const string name, const string col){
     AlphaColor* piece;
     const std::string path = get_path_name(name, col);
     int w, h;
@@ -22,7 +22,7 @@ AlphaColor* load_bitmap(string name, string col){
     return piece;
 }
 
-void initializer_map_piece(string name, string col){
+void initializer_map_piece(const string name, const string col){
     byte_pieces[col+name] = load_bitmap(name, col);
 }
 
@@ -41,16 +41,16 @@ void load_all_pieces(){
  * tools functions *
  ******************/
 
-void coord(Case c, int&x, int&y){
+void coord(const Case c, int&x, int&y){
     x = (c.get(0))*SPACE+MARGIN;
     y = (7-c.get(1))*SPACE+MARGIN;
 }
 
-Color color_case(Case c){
+Color color_case(const Case c){
     return BOARD_COLORS[(c.get(0)+c.get(1))%2];
 }
 
-std::string get_path_image(Piece* p){
+std::string get_path_image(const Piece* p){
     string col = string(1, "bw"[p->get_color()]); //b = black = 0, w = white = 1
     string s = col+p->get_name();
     return stringSrcPath("img/"+to_string(SPACE)+"/"+s+".png");
@@ -85,14 +85,14 @@ void display_grid_empty(){
     }
 }
 
-void display_byte(Piece* p, Case c, bool xor_mode, double fact){
+void display_byte(const Piece* p, const Case c, const bool xor_mode, const double fact){
     int x, y;
     coord(c, x, y);
     string name = string(1, "bw"[p->get_color()])+p->get_name();
-    putAlphaColorImage(x, y, byte_pieces[name],  SPACE, SPACE, true, fact);
+    putAlphaColorImage(x, y, byte_pieces[name],  SPACE, SPACE, xor_mode, fact);
 }
 
-void display_piece(Case c, Piece* p){
+void display_piece(const Piece* p, const Case c){
     int x, y;
     coord(c, x, y);
     string name = string(1, "bw"[p->get_color()])+p->get_name();
@@ -112,14 +112,15 @@ void display_piece(Case c, Piece* p){
     display(im, x, y);
 }*/
 
-void clr_case(Case c){
+void clr_case(const Case c){
     int x, y;
     coord(c, x, y);
     fillRect(x, y, SPACE, SPACE, color_case(c));
 }
-void go_to(Case c1, Case c2, Piece* p){
+void go_to(const Case c1, const Case c2, Piece* p){
     clr_case(c1);
-    display_piece(c2, p);
+    clr_case(c2);
+    display_piece(p, c2);
 }
 bool click_move(Case& c_start, Case& c_end){
     int x, y;
@@ -138,4 +139,14 @@ bool click_move(Case& c_start, Case& c_end){
         }
     }
     return count == 2;
+}
+void display_board(const Plateau& p){
+    for (int j=0;j<8;j++){
+        for (int i=0;i<8;i++){
+            Piece* pp = p.get(i, j);
+            if (pp != nullptr){
+                display_piece(pp, Case(i, j));
+            }
+        }
+    }
 }

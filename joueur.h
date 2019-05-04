@@ -8,6 +8,6 @@ class Joueur {
     Piece** boite;
 public:
     Joueur (const Plateau& p, int col);
-    void affiche();
+    void affiche() const;
     ~Joueur();
 };
