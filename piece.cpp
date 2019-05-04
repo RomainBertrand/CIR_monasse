@@ -93,8 +93,24 @@ bool Tour::permission_bouge(Case case_arrive) const {
     else return false;
 }
 
-bool Pion::permission_bouge(Case case_arrive) const { // les noirs en haut les blanc en bas
-    if (couleur==1 && case_arrive.get(1)-c.get(1)==1) return true;
-    else if (couleur==0 && c.get(1)-case_arrive.get(1)==1) return true;
-    else return false;
+bool Pion::permission_bouge(Case case_arrive) const { // les noirs=0 en haut les blanc=1 en bas
+    if (couleur==1){
+        if  (case_arrive.get(1)-c.get(1)==1){
+            return true;
+        }
+        else if (case_arrive.get(1)-c.get(1)==2 && case_arrive.get(0)==c.get(0)) {
+            return c.get(1)==1; // pion pas encore avancé, on peut l'avancer de 2 case.
+        }
+        else return false;
+    }
+    else if (couleur==0){
+            if  (case_arrive.get(1)-c.get(1)==-1){
+                return true;
+            }
+            else if (case_arrive.get(1)-c.get(1)==-2 && case_arrive.get(0)==c.get(0)) {
+                return c.get(1)==6; // pion pas encore avancé, on peut l'avancer de 2 case.
+            }
+            else return false;
+    }
+    else return false; // jamais atteint normalement
 }
