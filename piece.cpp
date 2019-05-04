@@ -2,6 +2,14 @@
 #include "plateau.h"
 #include "cmath"
 
+const std::string Piece::name = "piece";
+const std::string Dame::name = "dame";
+const std::string Roi::name = "roi";
+const std::string Tour::name = "tour";
+const std::string Cavalier::name = "cavalier";
+const std::string Fou::name = "fou";
+const std::string Pion::name = "pion";
+
 Piece::Piece(){}
 
 Piece::Piece(Case case_depart, int col){

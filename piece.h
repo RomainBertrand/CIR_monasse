@@ -8,7 +8,7 @@ class Piece {
 protected:
     int couleur; // 0 = noir, 1 = blanc
     Case c;
-    std::string name="piece";
+    static std::string const name;
 public:
     virtual bool permission_bouge(Case c) const {return false;} // il faut la définir
     virtual std::string get_name();
@@ -21,8 +21,8 @@ public:
 };
 
 class Roi : public Piece {
+    static std::string const name;
     bool rock = true;
-    std::string name = "roi" ;
 
 public:
     Roi(Case c, int couleur);
@@ -33,15 +33,16 @@ public:
 };
 
 class Dame : public Piece {
-    std::string name = "dame" ;
+    static std::string const name;
 public:
     Dame(Case c, int couleur);
     virtual std::string get_name();
     virtual bool permission_bouge(Case c) const;
 };
 
+
 class Fou : public Piece {
-    std::string name = "fou" ;
+    static std::string const name;
 public:
     Fou(Case c, int couleur);
     virtual std::string get_name();
@@ -49,7 +50,7 @@ public:
 };
 
 class Cavalier : public Piece {
-    std::string name = "cavalier" ;
+    static std::string const name;
 public:
     Cavalier(Case c, int couleur);
     virtual std::string get_name();
@@ -57,8 +58,8 @@ public:
 };
 
 class Tour : public Piece {
+    static std::string const name;
     bool rock = true;
-    std::string name = "tour" ;
 public:
     Tour(Case c, int couleur);
     virtual void bouge(Case c);
@@ -67,7 +68,7 @@ public:
 };
 
 class Pion : public Piece {
-    std::string name = "pion" ;
+    static std::string const name;
 public:
     Pion(Case c, int couleur);
     virtual void bouge(Case c);
