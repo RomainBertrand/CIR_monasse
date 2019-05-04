@@ -3,9 +3,44 @@
 using namespace std;
 #include <string.h>
 
+/**************************
+ * byte* pieces functions *
+ *************************/
+// to load pieces' images
+std::map<std::string, AlphaColor*> byte_pieces;
+
+std::string get_path_name(string name, string col){
+    string s = col+name;
+    return stringSrcPath("img/"+to_string(SPACE)+"/"+s+".png");
+}
+
+AlphaColor* load_bitmap(string name, string col){
+    AlphaColor* piece;
+    const std::string path = get_path_name(name, col);
+    int w, h;
+    loadAlphaColorImage(path, piece, w, h);
+    return piece;
+}
+
+void initializer_map_piece(string name, string col){
+    byte_pieces[col+name] = load_bitmap(name, col);
+}
+
+void load_all_pieces(){
+    string cols[2] = {"b", "w"};
+    string names[6] = {"roi", "dame", "fou", "cavalier", "tour", "pion"};
+    for (int i=0;i < 2;i++){
+        for (int j=0;j<6;j++){
+            initializer_map_piece(names[j], cols[i]);
+        }
+    }
+}
+
+
 /*******************
  * tools functions *
  ******************/
+
 void coord(Case c, int&x, int&y){
     x = (c.get(0))*SPACE+MARGIN;
     y = (7-c.get(1))*SPACE+MARGIN;
@@ -50,6 +85,21 @@ void display_grid_empty(){
     }
 }
 
+void display_byte(Piece* p, Case c, bool xor_mode, double fact){
+    int x, y;
+    coord(c, x, y);
+    string name = string(1, "bw"[p->get_color()])+p->get_name();
+    putAlphaColorImage(x, y, byte_pieces[name],  SPACE, SPACE, true, fact);
+}
+
+void display_piece(Case c, Piece* p){
+    int x, y;
+    coord(c, x, y);
+    string name = string(1, "bw"[p->get_color()])+p->get_name();
+    putAlphaColorImage(x, y, byte_pieces[name],  SPACE, SPACE, false);
+}
+
+/*
 void display_piece(Case c, Piece* p){
     Image<AlphaColor> im; // Image en niveaux de gris
     string file = get_path_image(p);
@@ -60,7 +110,8 @@ void display_piece(Case c, Piece* p){
     int x, y;
     coord(c, x, y);
     display(im, x, y);
-}
+}*/
+
 void clr_case(Case c){
     int x, y;
     coord(c, x, y);

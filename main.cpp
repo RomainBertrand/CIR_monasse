@@ -4,10 +4,14 @@ using namespace std;
 #include "joueur.h"
 #include "piece.h"
 #include "plateau.h"
+#include "graphics.h"
 
 int main()
 {
+    load_all_pieces();
     Plateau p;
+    click();
+
     p.affiche();
     cout <<p.bouge(p.get(Case(0,1)),Case(0,2)) << endl;
     p.affiche();
