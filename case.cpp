@@ -37,3 +37,11 @@ bool Case::operator==(Case c1){
     if (x==c1.x && y==c1.y) return true;
     else return false;
 }
+
+Deplacement d_deplacement(const Case c_start, const Case c_end){
+    int dx = c_end.get(0) - c_start.get(0);
+    int dy = c_end.get(1) - c_start.get(1);
+    if (dx != 0) dx /= std::abs(dx);
+    if (dy != 0) dy /= std::abs(dy);
+    return Deplacement(dx, dy);
+};

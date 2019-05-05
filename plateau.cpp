@@ -82,163 +82,42 @@ void Plateau::mange(Piece *p, Case c){
 int Plateau::permission_bouge(Piece* p, Case c){ // on teste les permissions de bouger en connaissant le plateau, string pour indiquer quel piece bouge
     if (p == nullptr) return 0; //on ne peut pas bouger du vide
     if (c == p->get()) return 0; // on ne peut pas bouger sur la même case
-    if (p->get_name().compare(std::string("roi"))==0){
-        if (p->permission_bouge(c)){
-            if (get(c)!=nullptr) return 2;
-            return 1;
-        }
-        else return 0;
+    int must_take_or_not = 1;
+    if (get(c) != nullptr){
+        if (get(c)->get_color() == p->get_color()) return 0; // On en peut pas prendre une pièce de sa couleur
+        must_take_or_not = 2;
     }
-    else if (p->get_name().compare(std::string("dame"))==0){
-        if (p->permission_bouge(c)){ // on check le board
-            int dx = c.get(0) - p->get().get(0);
-            int dy = c.get(1) - p->get().get(1); // on calcule la différence des cases et on fait tous les cas possibles
-            if (dx>0 && dy>0){
-                for(int i=1;i<dx;i++){
-                    if (get(p->get() + Case(i,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,dx))!=nullptr) return 2; // si la case cible est non occupée on doit manger
-                return 1; // sinon on prend
-            }
-            if (dx>0 && dy<0){
-                for(int i=1;i<dx;i++){
-                    if (get(p->get() + Case(i,-i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,-dx))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx<0 && dy>0){
-                for(int i=-1;i>dx;i--){
-                    if (get(p->get() + Case(i,-i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,-dx))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx<0 && dy<0){
-                for(int i=-1;i<dx;i--){
-                    if (get(p->get() + Case(i,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,dx))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx>0 && dy==0){
-                for(int i=1;i<dx;i++){
-                    if (get(p->get() + Case(i,0))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,0))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx<0 && dy==0){
-                for(int i=-1;i>dx;i--){
-                    if (get(p->get() + Case(i,0))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,0))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx==0 && dy>0){
-                for(int i=1;i<dy;i++){
-                    if (get(p->get() + Case(0,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(0,dy))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx==0 && dy<0){
-                for(int i=-1;i<dy;i--){
-                    if (get(p->get() + Case(0,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(0,dy))!=nullptr) return 2;
-                return 1;
-            }
-        }
-        else return 0;
+    if (!p->permission_bouge(c)) return 0;
 
+    if (p->get_name() == "roi"){
+        // TODO : à compléter (echec, roque)
+        return must_take_or_not;
     }
-    else if (p->get_name().compare(std::string("fou"))==0){
-        if (p->permission_bouge(c)){ // on check le board
-            int dx = c.get(0) - p->get().get(0);
-            int dy = c.get(1) - p->get().get(1); // on calcule la différence des cases et on fait tous les cas possibles
-            if (dx>0 && dy>0){
-                for(int i=1;i<dx;i++){
-                    if (get(p->get() + Case(i,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,dx))!=nullptr) return 2; // si la case cible est non occupée on doit manger
-                return 1; // sinon on prend
-            }
-            if (dx>0 && dy<0){
-                for(int i=1;i<dx;i++){
-                    if (get(p->get() + Case(i,-i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,-dx))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx<0 && dy>0){
-                for(int i=-1;i>dx;i--){
-                    if (get(p->get() + Case(i,-i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,-dx))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx<0 && dy<0){
-                for(int i=-1;i<dx;i--){
-                    if (get(p->get() + Case(i,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,dx))!=nullptr) return 2;
-                return 1;
-            }
-        }
-        else return 0;
+    else if (p->get_name()=="cavalier") {
+        return must_take_or_not;
     }
-    else if (p->get_name().compare(std::string("cavalier"))==0){
-        if (p->permission_bouge(c)){
-            if (get(c)!=nullptr) return 2;
-            return 1;
-        }
-        else return 0;
-    }
-    else if (p->get_name().compare(std::string("tour"))==0){
-        if (p->permission_bouge(c)){ // on check le board
-            int dx = c.get(0) - p->get().get(0);
-            int dy = c.get(1) - p->get().get(1); // on calcule la différence des cases et on fait tous les cas possibles
-            if (dx>0 && dy==0){
-                for(int i=1;i<dx;i++){
-                    if (get(p->get() + Case(i,0))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,0))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx<0 && dy==0){
-                for(int i=-1;i>dx;i--){
-                    if (get(p->get() + Case(i,0))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(dx,0))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx==0 && dy>0){
-                for(int i=1;i<dy;i++){
-                    if (get(p->get() + Case(0,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(0,dy))!=nullptr) return 2;
-                return 1;
-            }
-            if (dx==0 && dy<0){
-                for(int i=-1;i<dy;i--){
-                    if (get(p->get() + Case(0,i))!=nullptr) return 0;
-                }
-                if (get(p->get()+ Case(0,dy))!=nullptr) return 2;
-                return 1;
-            }
-        }
-        else return 0;
 
+    // on teste si il y a des pièces sur le trajet
+    Deplacement dc = d_deplacement(p->get(), c);
+    Case c_test = p->get();
+    int dx = c.get(0) - c_test.get(0);
+    int dy = c.get(1) - c_test.get(1);
+    int dl = std::max(std::abs(dx), std::abs(dy));
+    for (int i=1;i < dl;i++){
+        c_test = c_test+dc;
+        if (get(c_test) != nullptr) return 0; // Case occupée sur le déplacement
     }
-    else if (p->get_name().compare(std::string("pion"))==0){
-        if (p->permission_bouge(c)){
-            if (get(c)!=nullptr) return 2;
-            return 1;
-            }
-        else return 0;
+    /* à ce moment, si la case d'arrivée est occupée, c'est par une pièce de la couleur opposée
+     * la pièce a le droit de faire ce déplacement
+     * il n'y a pas de case occupée sur le trajet
+     * Il ne reste plus rien à vérifier. (à part les pions qui sont source de problèmes
+     * notamment pour la prise en passant ou la prise tout court. */
+
+    if (p->get_name() == "pion"){
+        // TODO : à compléter
+        return must_take_or_not;
     }
-    else return 0;
+    return must_take_or_not;
 }
 
 bool Plateau::permission_mange(Piece *p, Case c){

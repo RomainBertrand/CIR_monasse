@@ -66,6 +66,7 @@ void Tour::bouge(Case case_arrivee){
 /****************************************************
  ***************** permission_bouge *****************
  ***************************************************/
+
 // Gestion des déplacements possibles
 
 bool Roi::permission_bouge(Case case_arrive) const {

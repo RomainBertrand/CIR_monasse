@@ -13,3 +13,5 @@ public:
     Case operator+(Case c1);
     bool operator==(Case c1);
 };
+typedef Case Deplacement;
+Deplacement d_deplacement(const Case c_start, const Case c_end);
