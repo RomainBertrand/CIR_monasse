@@ -7,6 +7,7 @@
 class Plateau {
     Piece** plateau; // On met le plateau en privé, si une pièce veut checker qu'elle peut bouger on demande le reseignement au tableau avec une méthode
     Piece* peut_etre_pris_en_passant;
+    bool petit_roque, grand_roque;
 public:
     Plateau();
     ~Plateau();

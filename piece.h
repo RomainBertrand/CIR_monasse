@@ -22,14 +22,12 @@ public:
 
 class Roi : public Piece {
     static std::string const name;
-    bool rock = true;
 
 public:
     Roi(Case c, int couleur);
     virtual void bouge(Case c);
     virtual std::string get_name() const;
     virtual bool permission_bouge(Case c) const;
-    bool rocker(Case c);
 };
 
 class Dame : public Piece {
@@ -59,7 +57,6 @@ public:
 
 class Tour : public Piece {
     static std::string const name;
-    bool rock = true;
 public:
     Tour(Case c, int couleur);
     virtual void bouge(Case c);

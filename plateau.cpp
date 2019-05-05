@@ -4,6 +4,7 @@
 
 Plateau::Plateau(){
     peut_etre_pris_en_passant = nullptr;
+    petit_roque = grand_roque = true;
     plateau = new Piece*[8*8];
     // On place les blancs
     set(new Tour(Case('A',1),1),Case('A',1));
@@ -70,11 +71,28 @@ void Plateau::bouge(Piece* p, Case c){
         clr_case(c);
     }
     else if (i==3){ // prise "en passant"
-        std::cout << "yolo" << std::endl;
         delete peut_etre_pris_en_passant;
         Case est_pris_en_passant(c.get(0), p->get().get(1));
         clr_case(est_pris_en_passant);
-        std::cout << "yolo" << std::endl;
+
+    }
+    else if (i==7 || i==8){ // petit ou grand roque, on "pré-bouge" la tour
+        int row = c.get(1)+1;
+        Case case_tour, new_case_tour;
+        if (i==7) {
+            case_tour.set('H', row);
+            new_case_tour.set('F', row);
+        }
+        else {
+            case_tour.set('A', row);
+            new_case_tour.set('D', row);
+        }
+        Piece* tour = get(case_tour);
+        go_to(case_tour, new_case_tour, tour);
+        click();
+        set(tour, new_case_tour);
+        set(nullptr, case_tour);
+        tour->bouge(case_tour);
 
     }
     if (i==6){
@@ -83,6 +101,19 @@ void Plateau::bouge(Piece* p, Case c){
     else{
         peut_etre_pris_en_passant = nullptr;
     }
+    // gestion du roque por supprimer le droit d'en faire un.
+    if (p->get_name()=="roi" && (petit_roque || grand_roque)){
+        petit_roque = grand_roque = false;
+    }
+    else if (p->get_name()=="tour"  && p->get().get(1) == 0+7*((p->get_color()+1)%2)){
+        if (p->get().get(0) == 0 && grand_roque){
+            grand_roque = false;
+        }
+        else if (p->get().get(0) == 7 && petit_roque){
+            petit_roque = true;
+        }
+    }
+    // fin gestion du roque
     go_to(p->get(),c,p);
     set(p,c);
     set(nullptr,p->get());
@@ -108,8 +139,12 @@ void Plateau::mange_vieux(Piece *p, Case c){
  *  - 3 = Oui, fait une prise en passant
  *  - 4 = Oui, promotion d'un pion.
  *  - 5 = Oui, promotion en prenant d'un pion
- *  - 6 = Oui, pourra être pris en passant */
+ *  - 6 = Oui, pourra être pris en passant
+ *  - 7 = Petit Roque
+ *  - 8 = Grand Roque */
 
+
+// TODO : à compléter (echec)
 int Plateau::permission_bouge(Piece* p, Case c){ // on teste les permissions de bouger en connaissant le plateau, string pour indiquer quel piece bouge
     if (p == nullptr) return 0; //on ne peut pas bouger du vide
     if (c == p->get()) return 0; // on ne peut pas bouger sur la même case
@@ -118,13 +153,9 @@ int Plateau::permission_bouge(Piece* p, Case c){ // on teste les permissions de 
         if (get(c)->get_color() == p->get_color()) return 0; // On en peut pas prendre une pièce de sa couleur
         must_take_or_not = 2;
     }
-    if (!p->permission_bouge(c)) return 0;
+    if (!p->permission_bouge(c) && p->get_name() != "roi") return 0;
 
-    if (p->get_name() == "roi"){
-        // TODO : à compléter (echec, roque)
-        return must_take_or_not;
-    }
-    else if (p->get_name()=="cavalier") {
+    if (p->get_name()=="cavalier") {
         return must_take_or_not;
     }
 
@@ -142,9 +173,24 @@ int Plateau::permission_bouge(Piece* p, Case c){ // on teste les permissions de 
      * la pièce a le droit de faire ce déplacement
      * il n'y a pas de case occupée sur le trajet
      * Il ne reste plus rien à vérifier. (à part les pions qui sont source de problèmes
-     * notamment pour la prise en passant ou la prise tout court.) */
+     * notamment pour la prise en passant ou la prise tout court. et le roi dont le roque est compliqué) */
 
-    if (p->get_name() == "pion"){
+    if (p->get_name() == "roi"){
+        if (std::abs(dx)==2 && (dy != 0 || (!petit_roque && !grand_roque))) return false;
+        if (dx == 2 && petit_roque){
+            std::cout << "yolo" << std::endl;
+            if (get(p->get()+dc) != nullptr) return 0;
+            else return 7;
+        }
+        else if (dx == -2 && grand_roque){
+            if (get(p->get()+dc) != nullptr || get(p->get()+dc+dc) != nullptr) return 0; // le chemin doit être libre
+            else return 8;
+        }
+        else if (std::abs(dx)==2) return 0;
+        else if (p->permission_bouge(c)) return must_take_or_not;
+        else return 0;
+    }
+    else if (p->get_name() == "pion"){
         // TODO : à compléter
         if (std::abs(dy) == 2) return 6; // pourra être pris en passant
         if (dx==0 && must_take_or_not == 2) return 0; // pion ne peut pas prendre tout droit
