@@ -95,6 +95,7 @@ bool Tour::permission_bouge(Case case_arrive) const {
 }
 
 bool Pion::permission_bouge(Case case_arrive) const { // les noirs=0 en haut les blanc=1 en bas
+    if (std::abs(case_arrive.get(0)-c.get(0))>1) return false;
     if (couleur==1){
         if  (case_arrive.get(1)-c.get(1)==1){
             return true;
