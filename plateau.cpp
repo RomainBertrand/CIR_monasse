@@ -3,6 +3,7 @@
 #include <iostream>
 
 Plateau::Plateau(){
+    peut_etre_pris_en_passant = nullptr;
     plateau = new Piece*[8*8];
     // On place les blancs
     set(new Tour(Case('A',1),1),Case('A',1));
@@ -60,15 +61,36 @@ void Plateau::set(Piece* p, Case c){
 }
 
 void Plateau::bouge(Piece* p, Case c){
-    if (permission_bouge(p,c)){
-        go_to(p->get(),c,p);
-        set(p,c);
-        set(nullptr,p->get());
-        p->bouge(c);
+    int i = permission_bouge(p,c);
+    if (i==0){
+        return;
     }
+    else if (i==2 || i==5){ // prise "normale"
+        delete get(c);
+        clr_case(c);
+    }
+    else if (i==3){ // prise "en passant"
+        std::cout << "yolo" << std::endl;
+        delete peut_etre_pris_en_passant;
+        Case est_pris_en_passant(c.get(0), p->get().get(1));
+        clr_case(est_pris_en_passant);
+        std::cout << "yolo" << std::endl;
+
+    }
+    if (i==6){
+        peut_etre_pris_en_passant = p;
+    }
+    else{
+        peut_etre_pris_en_passant = nullptr;
+    }
+    go_to(p->get(),c,p);
+    set(p,c);
+    set(nullptr,p->get());
+    p->bouge(c);
+
 }
 
-void Plateau::mange(Piece *p, Case c){
+void Plateau::mange_vieux(Piece *p, Case c){
     if (permission_mange(p,c)){
         clr_case(c);
         go_to(p->get(),c,p);
@@ -78,6 +100,15 @@ void Plateau::mange(Piece *p, Case c){
         p->bouge(c);
     }
 }
+
+/* Permissions bouge :
+ *  - 0 = Non
+ *  - 1 = Oui, case Libre, coup classique
+ *  - 2 = Oui, prise de piece
+ *  - 3 = Oui, fait une prise en passant
+ *  - 4 = Oui, promotion d'un pion.
+ *  - 5 = Oui, promotion en prenant d'un pion
+ *  - 6 = Oui, pourra être pris en passant */
 
 int Plateau::permission_bouge(Piece* p, Case c){ // on teste les permissions de bouger en connaissant le plateau, string pour indiquer quel piece bouge
     if (p == nullptr) return 0; //on ne peut pas bouger du vide
@@ -111,15 +142,32 @@ int Plateau::permission_bouge(Piece* p, Case c){ // on teste les permissions de 
      * la pièce a le droit de faire ce déplacement
      * il n'y a pas de case occupée sur le trajet
      * Il ne reste plus rien à vérifier. (à part les pions qui sont source de problèmes
-     * notamment pour la prise en passant ou la prise tout court. */
+     * notamment pour la prise en passant ou la prise tout court.) */
 
     if (p->get_name() == "pion"){
         // TODO : à compléter
+        if (std::abs(dy) == 2) return 6; // pourra être pris en passant
+        if (dx==0 && must_take_or_not == 2) return 0; // pion ne peut pas prendre tout droit
+        if (std::abs(dx)==1 && must_take_or_not == 1){ // y a-t-il un pion qu'on peut prendre en passant ?
+            if (peut_etre_pris_en_passant != nullptr){
+                if (peut_etre_pris_en_passant->get_color() == p->get_color()) return 0;
+                Case sera_pris = peut_etre_pris_en_passant->get();
+                if (sera_pris.get(1) == p->get().get(1) && sera_pris.get(0) == c.get(0)) return 3;
+                else return 0;
+            }
+            else return 0;
+        }
+
+        if (c.get(1) == 7 or c.get(1) == 0){
+            return must_take_or_not+3;  // 4 ou 5
+        }
         return must_take_or_not;
     }
     return must_take_or_not;
 }
 
+
+// inutile ? ?
 bool Plateau::permission_mange(Piece *p, Case c){
     if (get(c)==nullptr) return false; // on ne peut pas manger du vide
     else if (p->get_color()!=get(c)->get_color()){

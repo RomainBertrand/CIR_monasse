@@ -35,7 +35,7 @@ int main()
     click();
     b.bouge(b.get(Case('C',1)),Case('H',6));
     click();
-    b.mange(b.get(Case('G',3)),Case('G',7));
+    b.mange_vieux(b.get(Case('G',3)),Case('G',7));
     /*
     cout <<p.bouge(p.get(Case(0,1)),Case(0,2)) << endl;
     go_to(Case(0,1),Case(0,2), p.get(Case(0, 2)));
