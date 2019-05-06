@@ -89,7 +89,6 @@ void Plateau::bouge(Piece* p, Case c){
         }
         Piece* tour = get(case_tour);
         go_to(case_tour, new_case_tour, tour);
-        click();
         set(tour, new_case_tour);
         set(nullptr, case_tour);
         tour->bouge(case_tour);
